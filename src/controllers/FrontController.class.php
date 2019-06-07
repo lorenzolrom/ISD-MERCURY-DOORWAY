@@ -42,7 +42,6 @@ class FrontController
                         // MULTI-MARK
                         $script = '<script>';
                         $destinations = explode(';', $result['destination']);
-                        $size = sizeof($destinations);
 
                         foreach($destinations as $destination)
                         {
