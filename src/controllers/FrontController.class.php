@@ -37,6 +37,25 @@ class FrontController
             {
                 if($result['alias'] == $alias)
                 {
+                    if(strpos($result['destination'], ';') !== FALSE)
+                    {
+                        // MULTI-MARK
+                        $script = '<script>';
+                        $destinations = explode(';', $result['destination']);
+                        $size = sizeof($destinations);
+
+                        foreach($destinations as $destination)
+                        {
+                            $script .= "window.open('{$destination}', '_blank');\n";
+                        }
+
+                        // Replace current window with last link
+                        $script .= '</script>';
+
+                        die($script . "<h1>Navigation Complete!</h1><p>Allow this window to open new tabs if prompted, otherwise you may close this window</p>");
+                    }
+
+                    // Single URL Redirect (with URI preserved)
                     header('Location: ' . rtrim($result['destination'], '/') . $uri );
                     exit;
                 }
