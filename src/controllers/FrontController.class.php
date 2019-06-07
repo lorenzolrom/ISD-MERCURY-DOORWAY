@@ -42,7 +42,7 @@ class FrontController
                 }
             }
 
-            die('Alias Not Found');
+            die("<h1>Alias '$alias' Not Found</h1>");
         }
         catch(\Exception $e)
         {
