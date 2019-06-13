@@ -55,7 +55,7 @@ class FrontController
                     }
 
                     // Single URL Redirect (with URI preserved)
-                    header('Location: ' . rtrim($result['destination'], '/') . $uri );
+                    header('Location: ' . rtrim(rtrim($result['destination'], '/') . $uri, '/'));
                     exit;
                 }
             }
