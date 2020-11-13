@@ -60,7 +60,8 @@ class FrontController
                 }
             }
 
-            die("<h1>Alias '$alias' Not Found</h1>");
+            http_response_code(404);
+            die("<h1>Domain '$alias' Not Found</h1>");
         }
         catch(\Exception $e)
         {
