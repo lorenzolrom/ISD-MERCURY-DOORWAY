@@ -55,10 +55,6 @@ class InfoCentralConnection
             'Secret: ' . \Config::OPTIONS['icSecret']
         );
 
-        // Add the user's token if it has been defined
-        if(isset($_COOKIE[\Config::OPTIONS['cookieName']]))
-            $headers[] = 'Token: ' . $_COOKIE[\Config::OPTIONS['cookieName']];
-
         curl_setopt($link, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($link, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($link, CURLOPT_CUSTOMREQUEST, $type);

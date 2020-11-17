@@ -21,6 +21,12 @@ class GenericConfig
         'baseURL' => 'example.com',
 
         'icURL' => 'https://service.com/service/',
-        'icSecret' => ''
+        'icSecret' => '',
+
+        'enableLogging' => FALSE,
+        'databaseHost' => '',
+        'databaseName' => '',
+        'databaseUser' => '',
+        'databasePassword' => '',
     );
 }

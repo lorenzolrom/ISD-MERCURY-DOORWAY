@@ -16,6 +16,8 @@
 namespace controllers;
 
 
+use Config;
+use database\DatabaseConnection;
 use utilities\InfoCentralConnection;
 
 class FrontController
@@ -27,7 +29,21 @@ class FrontController
             $url = $_SERVER['HTTP_HOST']; // The domain
             $uri = $_SERVER['REQUEST_URI']; // Part after domain
 
-            $alias = rtrim(explode(\Config::OPTIONS['baseURL'], $url)[0], '.');
+            $alias = rtrim(explode(Config::OPTIONS['baseURL'], $url)[0], '.');
+
+            // Log this request if feature is enabled
+            if(Config::OPTIONS['enableLogging'])
+            {
+                $database = new DatabaseConnection();
+
+                $record = $database->prepare("INSERT INTO `NIS_URLAliasHit` VALUES (:alias, :uri, NOW(), :ipAddress)");
+                $record->bindParam('alias', $alias, DatabaseConnection::PARAM_STR);
+                $record->bindParam('uri', $uri, DatabaseConnection::PARAM_STR);
+                $record->bindParam('ipAddress', $_SERVER['REMOTE_ADDR'], DatabaseConnection::PARAM_STR);
+                $record->execute();
+
+                $database->close();
+            }
 
             $results = InfoCentralConnection::getResponse(InfoCentralConnection::POST, 'urlaliases/search', array(
                 'alias' => $alias
